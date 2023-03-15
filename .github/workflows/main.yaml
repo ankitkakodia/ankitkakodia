@@ -1,0 +1,23 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CICD in UAT
+
+on:
+  push:
+    branches:
+      - uat
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get latest code
+      uses: actions/checkout@v3
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      with:
+        server: ${{ secrets.SERVER_NAME }}
+        username: ${{ secrets.SIT_USERNAME }}
+        password: ${{ secrets.SIT_PASSWORD }}
